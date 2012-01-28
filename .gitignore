@@ -1,0 +1,21 @@
+
+Assets/2D Mario Assets/Audio/
+*.csproj
+Assets/2D Mario Assets/Materials
+Assets/2D Mario Assets/Models/Materials
+Assets/2D Mario Assets/Prefabs
+Library
+*.png
+*.suo
+*.unityproj
+*.unity
+*.js
+*.FBX
+*.shader
+*.asset
+*.ttf
+*.blend
+*.anim
+*.jpg
+*.cginc
+Assets/2D Mario Assets/Standard Assets/Image Effects (Pro Only)/
