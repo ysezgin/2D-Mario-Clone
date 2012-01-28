@@ -36,13 +36,16 @@ public class PlayerControl : MonoBehaviour
 
 	#endregion	
 
-	static int							moveDirection       			= 1;                							// direction the player is facing, 1 = right, -1 = left
+	public static int					moveDirection       			= 1;                							// direction the player is facing, 1 = right, -1 = left
 
 	static private Vector3				velocity            			= Vector3.zero;      							// direction and speed of player
 
 	static float						startPosition       			= 0.0f;             							// coordinate of start postioon
 
-	static bool								in_a_jump						= false;
+	static bool							in_a_jump						= false;
+
+	static	CharacterController			playerController			;
+	static	AudioSource					playerAudio;
 	
 	#region Particles
 
@@ -55,6 +58,7 @@ public class PlayerControl : MonoBehaviour
 
 	#endregion
 
+	
 
 	void				Update								()
 	{
@@ -73,6 +77,8 @@ public class PlayerControl : MonoBehaviour
 						
 	}
 
+
+
 	#region				Player Action Functions
 
 	void				player_actions						( CharacterController playerController, AudioSource playerAudio )
@@ -82,7 +88,7 @@ public class PlayerControl : MonoBehaviour
 						
 	}	
 
-	void				ground_actions				( CharacterController playerController, AudioSource playerAudio )
+	void				ground_actions						( CharacterController playerController, AudioSource playerAudio )
 	{
 						if	(playerController.isGrounded == true)												// movements available to the player on the ground
 						{
@@ -96,7 +102,7 @@ public class PlayerControl : MonoBehaviour
 						}
 	}
 
-	static void			air_actions					( CharacterController playerController, AudioSource playerAudio )				// movements available to the player in the air
+	static void			air_actions							( CharacterController playerController, AudioSource playerAudio )				// movements available to the player in the air
 	{
 						if ( playerController.isGrounded == false && in_a_jump == true)
 						{
@@ -221,7 +227,7 @@ public class PlayerControl : MonoBehaviour
 						if		( Input.GetButton( "Fire1" ))											// player does a run jump
 						{	
 								velocity.y  =		runJump;
- 								velocity.x  =		runSpeed * Input.GetAxis ("Horizontal");								// the run jump moves faster in the x direction than the other jumps
+ 								velocity.x  =		runSpeed * Input.GetAxis ("Horizontal");			// the run jump moves faster in the x direction than the other jumps
 						}
 						else
 						{	
@@ -367,7 +373,7 @@ public class PlayerControl : MonoBehaviour
 
 	 */
  
-	void				play_sound							( AudioSource soundSource, AudioClip soundName, float soundDelay)
+	static void			play_sound							( AudioSource soundSource, AudioClip soundName, float soundDelay)
 	{
 						if	( soundSource.isPlaying == false && Time.time > soundRate )
 						{

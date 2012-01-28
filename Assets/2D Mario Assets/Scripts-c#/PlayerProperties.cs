@@ -6,60 +6,36 @@ using System.Collections;
 public class PlayerProperties : MonoBehaviour
 {
 
-	#region Fields
+	#region									_Fields_
 
-	public int						lives							=	3;
-	public int						keys							=	0;
-	public int						coins							=	0;
+	public 	int								lives							=	3;
+	public 	int								keys							=	0;
+	public 	int								coins							=	0;
 
-	public GameObject				projectileFire;
+	public 	Rigidbody						projectileFire;
 
-	public Transform				projectile_socket_left;
-	public Transform				projectile_socket_right;
+	public 	Transform						projectile_socket_left;
+	public 	Transform						projectile_socket_right;
 
-	public Material					material_player_standard;
-	public Material					material_player_fire;
+	public 	Material						material_player_standard;
+	public 	Material						material_player_fire;
 
-	public bool						changeMario						=	false;
-	public bool						hasFire							=	false;
+	public 	bool							changeMario						=	false;
+	public 	bool							hasFire							=	false;
 
-	private int						coinLife						=	20;
-	private bool					canShoot						=	false;
+	private int								coinLife						=	20;
+	private bool							canShoot						=	false;
 
-	static CharacterController		playerController;
-	static PlayerControl			playerControlScript;	
+	public static CharacterController		playerController;		
+	public static Transform					playerTransform;
 	
-	public PlayerState				active_player_state				=	PlayerState.MarioSmall;
+	public PlayerState						active_player_state				=	PlayerState.MarioSmall;
 
 
 	#endregion
 
 
-	#region Properties
-
-
-
-	#endregion
-
-
-	#region UnityEngine Functions
-
-	// Use this for initialization
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void			Update()
-	{
-					playerController				=	GetComponent		<CharacterController>	();
-					playerControlScript				=	GetComponent		<PlayerControl>			();
-					SetPlayerState						();
-
-	}
-
-	#endregion
+	#region			_Properties_
 
 	public enum		PlayerState
 	{
@@ -69,8 +45,56 @@ public class PlayerProperties : MonoBehaviour
 					MarioFire	=	3,														// enable the fireball power
 	}
 
+	#endregion
+
+
+	#region			UnityEngine Functions
 
 	
+	// Update is called once per frame
+	void			Update()
+	{
+					playerController				=	GetComponent		<CharacterController>	();
+					playerTransform					=	GetComponent		<Transform>				();
+					
+					change_player_state		();
+					Shoot					();
+
+	}
+
+	#endregion
+
+	
+
+
+	void			Shoot					()
+	{
+					
+					float playerDirection	=	playerController.velocity.x;
+					
+					if ( canShoot && Input.GetButtonDown ("Fire1") &&  playerDirection < 0)
+					{
+							Rigidbody		clone;
+							Vector3			left_socket			=	projectile_socket_left.transform.position;
+							Quaternion		player_rotation		=	playerController.transform.rotation;
+
+							clone = Instantiate ( projectileFire, left_socket, player_rotation) as Rigidbody;
+							clone.AddForce		( -90, 0, 0);
+							
+					}
+
+					if ( canShoot && Input.GetButtonDown ("Fire1") && playerDirection > 0)
+					{
+							Rigidbody		clone;
+							Vector3			right_socket		=	projectile_socket_right.transform.position;
+							Quaternion		player_rotation		=	playerController.transform.rotation;
+
+							clone = Instantiate ( projectileFire, right_socket, player_rotation) as Rigidbody;
+							clone.AddForce		( 90, 0, 0);
+							
+
+					}
+	}
 
 
 	void			AddKeys					( int numkey )
@@ -83,47 +107,58 @@ public class PlayerProperties : MonoBehaviour
 					coins	=	coins + numCoin;
 	}
 
+	void			change_player_state		()
+	{
+					if (changeMario == true)
+					{ 
+							SetPlayerState						();
+					}
+	}
+
+
 	void			SetPlayerState			()
 	{
-		switch ( active_player_state )
-		{
-				case		PlayerState.MarioDead:
-							print ("MarioDead");
+					switch ( active_player_state )
+					{
+							case	PlayerState.MarioDead:
+											player_scale_normal		();
 							break;
 
-				case		PlayerState.MarioSmall:
-							print ("MarioSmall");
+							case	PlayerState.MarioSmall:
+											player_scale_small		();
+											canShoot			=	false;
+							break;			
+
+							case	PlayerState.MarioLarge:
+											player_scale_normal		();
+											canShoot			=	false;
 							break;
 
-				case		PlayerState.MarioLarge:
-							print ("MarioLarge");
+							case	PlayerState.MarioFire:
+											player_scale_normal		();
+											canShoot			=	true;
 							break;
 
-				case		PlayerState.MarioFire:
-							print ("MarioFire");
-							break;
-
-				default:
+							default:
 							break;
 		}
 	}
 
-	#region Unity Inspector Functions
+
 
 	
 
-
-
-	#endregion
-	
-
-
-	/*
-	public struct Player_Properties
+	void			player_scale_small			()
 	{
-
+					playerTransform.localScale	=	new Vector3	( 1.0f, 0.75f, 1.0f);
 	}
-	*/
+
+	void			player_scale_normal			()
+	{
+					playerTransform.localScale	=	new Vector3	( 1.0f, 1.0f, 1.0f);
+	}
+
+
 
 
 

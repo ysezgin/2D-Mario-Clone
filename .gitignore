@@ -19,3 +19,10 @@ Library
 *.jpg
 *.cginc
 Assets/2D Mario Assets/Standard Assets/Image Effects (Pro Only)/
+Temp
+obj
+*.sln
+*.pidb
+*.guiskin
+*.physicmaterial
+*.tga
