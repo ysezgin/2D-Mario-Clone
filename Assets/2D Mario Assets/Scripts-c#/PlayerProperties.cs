@@ -125,7 +125,8 @@ public class PlayerProperties : MonoBehaviour
 					switch ( active_player_state )
 					{
 							case	PlayerState.MarioDead:
-											player_scale_normal		();
+											Destroy ( gameObject );
+											changeMario					= false;
 							break;
 
 							case	PlayerState.MarioSmall:
@@ -151,8 +152,6 @@ public class PlayerProperties : MonoBehaviour
 											playerMeshRender.material	=	material_player_fire;
 							break;
 
-							default:
-							break;
 		}
 	}
 
