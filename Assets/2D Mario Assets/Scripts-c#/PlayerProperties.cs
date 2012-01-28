@@ -28,6 +28,7 @@ public class PlayerProperties : MonoBehaviour
 
 	public static CharacterController		playerController;		
 	public static Transform					playerTransform;
+	public static MeshRenderer				playerMeshRender;
 	
 	public PlayerState						active_player_state				=	PlayerState.MarioSmall;
 
@@ -56,7 +57,8 @@ public class PlayerProperties : MonoBehaviour
 	{
 					playerController				=	GetComponent		<CharacterController>	();
 					playerTransform					=	GetComponent		<Transform>				();
-					
+					playerMeshRender				=	GetComponent		<MeshRenderer>			();		
+
 					change_player_state		();
 					Shoot					();
 
@@ -119,6 +121,7 @@ public class PlayerProperties : MonoBehaviour
 
 	void			SetPlayerState			()
 	{
+					
 					switch ( active_player_state )
 					{
 							case	PlayerState.MarioDead:
@@ -126,18 +129,26 @@ public class PlayerProperties : MonoBehaviour
 							break;
 
 							case	PlayerState.MarioSmall:
+											
 											player_scale_small		();
-											canShoot			=	false;
+																				
+											canShoot					=	false;
+											changeMario					=	false;
+											playerMeshRender.material	=	material_player_standard;
 							break;			
 
 							case	PlayerState.MarioLarge:
 											player_scale_normal		();
-											canShoot			=	false;
+											canShoot					=	false;
+											changeMario					=	false;
+											playerMeshRender.material	=	material_player_standard;
 							break;
 
 							case	PlayerState.MarioFire:
 											player_scale_normal		();
-											canShoot			=	true;
+											canShoot					=	true;
+											changeMario					=	false;
+											playerMeshRender.material	=	material_player_fire;
 							break;
 
 							default:
@@ -151,12 +162,21 @@ public class PlayerProperties : MonoBehaviour
 
 	void			player_scale_small			()
 	{
+					PlayerControl.gravity		=	0;
 					playerTransform.localScale	=	new Vector3	( 1.0f, 0.75f, 1.0f);
+					playerTransform.Translate	(0.0f, 0.2f, 0f);
+					playerController.height		=	0.45f;
+					PlayerControl.gravity		=	20.0f;
 	}
 
 	void			player_scale_normal			()
 	{
+					PlayerControl.gravity		=	0;
+					playerTransform.Translate	(0.0f, 0.4f, 0.0f);
 					playerTransform.localScale	=	new Vector3	( 1.0f, 1.0f, 1.0f);
+					playerController.height		=	0.5f;
+					PlayerControl.gravity		=	20.0f;
+					playerTransform.Translate	(0.0f, 0.0f, 0.0f);
 	}
 
 
