@@ -71,10 +71,11 @@ public class PlayerProperties : MonoBehaviour
 	{
 					
 					float playerDirection	=	playerController.velocity.x;
-					
+
+					Rigidbody		clone;
 					if ( canShoot && Input.GetButtonDown ("Fire1") &&  playerDirection < 0)
 					{
-							Rigidbody		clone;
+							
 							Vector3			left_socket			=	projectile_socket_left.transform.position;
 							Quaternion		player_rotation		=	playerController.transform.rotation;
 
@@ -85,7 +86,7 @@ public class PlayerProperties : MonoBehaviour
 
 					if ( canShoot && Input.GetButtonDown ("Fire1") && playerDirection > 0)
 					{
-							Rigidbody		clone;
+							
 							Vector3			right_socket		=	projectile_socket_right.transform.position;
 							Quaternion		player_rotation		=	playerController.transform.rotation;
 
