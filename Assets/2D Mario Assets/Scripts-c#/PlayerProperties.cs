@@ -70,7 +70,7 @@ public class PlayerProperties : MonoBehaviour
 	void			Shoot					()
 	{
 					
-					float playerDirection	=	playerController.velocity.x;
+					float playerDirection	=	PlayerControl.moveDirection;
 
 					Rigidbody		clone;
 					if ( canShoot && Input.GetButtonDown ("Fire1") &&  playerDirection < 0)
