@@ -13,18 +13,9 @@ public class SpawnSaveSetup : MonoBehaviour
 	private static float		soundDelay				=		0.0f;
 	private Vector3				currentSavePosition;
 
-	public PlayerControl	playerController;
-	public Transform		playerTransform;
-
 
 	#endregion
-	// Update is called once per frame
-	void				Update						() 
-	{
-						playerController			=	GetComponent	<PlayerControl>	();
-						playerTransform				=	GetComponent	<Transform>		();
-	}
-
+	
 	void				Start						()
 	{
 						if ( startPoint != null)
@@ -46,7 +37,7 @@ public class SpawnSaveSetup : MonoBehaviour
 						
 	}
 
-	void				onTriggerEnter				( Collider other)		
+	void				OnTriggerEnter				( Collider other)		
 	{
 						if (other.tag	==	"savePoint")
 						{
@@ -55,6 +46,7 @@ public class SpawnSaveSetup : MonoBehaviour
 
 						if (other.tag	==	"killbox")
 						{
+								play_sound ( audio, soundDie, 0);
 								transform.position = currentSavePosition;
 						}
 	}
