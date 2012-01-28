@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 
-public class playerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
 	#region Fields
 
@@ -140,7 +140,7 @@ public class playerControl : MonoBehaviour
 	{
 						if	(	velocity.x == 0	&& 
 									velocity.y == 0	&&
-										Input.GetAxis ("Vertical") == 0 &&
+										Input.GetAxis ("Vertical") >= 0 &&
 											Input.GetAxis ("Horizontal") == 0 )
 						{
 								idle_animation		(playerController);
@@ -190,7 +190,16 @@ public class playerControl : MonoBehaviour
 
 	static void			set_player_air_velocity				( CharacterController playerController )
 	{
-						velocity.x          =   Input.GetAxis("Horizontal");									// the player can change the direction of movement while they're in the air
+		
+						if ( Input.GetButton ("Fire1"))
+						{
+								velocity.x          =   Input.GetAxis("Horizontal") * runSpeed;
+						}				
+						else
+						{
+								velocity.x          =   Input.GetAxis("Horizontal") * walkSpeed;									// the player can change the direction of movement while they're 
+						}
+		 
 					
 						if (playerController.collisionFlags == CollisionFlags.Above)							// if the player's head collides with an object, repel the player downwards
 						{
@@ -212,7 +221,7 @@ public class playerControl : MonoBehaviour
 						if		( Input.GetButton( "Fire1" ))											// player does a run jump
 						{	
 								velocity.y  =		runJump;
- 								velocity.x  =		velocity.x * runSpeed;								// the run jump moves faster in the x direction than the other jumps
+ 								velocity.x  =		runSpeed * Input.GetAxis ("Horizontal");								// the run jump moves faster in the x direction than the other jumps
 						}
 						else
 						{	
@@ -259,12 +268,12 @@ public class playerControl : MonoBehaviour
 	{
 						if (moveDirection == 1)												// sets player animation to idle right
 						{
-								aniSprite.animate( playerController, 16, 16, 0, 0, 16, 12);
+								AniSprite.animate( playerController, 16, 16, 0, 0, 16, 12);
 						}
 
 						if (moveDirection == -1)												// sets player animation to idle left
 						{
-								aniSprite.animate( playerController, 16, 16, 0, 1, 16, 12);
+								AniSprite.animate( playerController, 16, 16, 0, 1, 16, 12);
 						}
 	}
 
@@ -272,12 +281,12 @@ public class playerControl : MonoBehaviour
 	{
 						if (velocity.x < 0)																		// sets player animation to walk left
 						{								
-								aniSprite.animate( playerController, 16, 16, 0, 3, 10, 15);
+								AniSprite.animate( playerController, 16, 16, 0, 3, 10, 15);
 						}
 
 						if (velocity.x > 0)																		// sets player animation to walk right
 						{
-								aniSprite.animate( playerController, 16, 16, 0, 2, 10, 15);
+								AniSprite.animate( playerController, 16, 16, 0, 2, 10, 15);
 						}
 	}
 
@@ -285,12 +294,12 @@ public class playerControl : MonoBehaviour
 	{
 						if (velocity.x < 0  && Input.GetButton ("Fire1"))										// sets player animation to run left()
 						{					
-								aniSprite.animate( playerController, 16, 16, 0, 5, 16, 24);
+								AniSprite.animate( playerController, 16, 16, 0, 5, 16, 24);
 						}
 
 						if (velocity.x > 0 && Input.GetButton ("Fire1"))										// sets player animation to run right
 						{
-								aniSprite.animate( playerController, 16, 16, 0, 4, 16, 24);
+								AniSprite.animate( playerController, 16, 16, 0, 4, 16, 24);
 						}
 	}
 
@@ -300,11 +309,11 @@ public class playerControl : MonoBehaviour
 						{
 								if (moveDirection == -1)														// player is facing left
 								{
-										aniSprite.animate( playerController, 16, 16, 0, 9, 16, 24);				// sets player animation to crouch left
+										AniSprite.animate( playerController, 16, 16, 0, 9, 16, 24);				// sets player animation to crouch left
 								}
 								if (moveDirection == 1)															// player is facing right
 								{
-										aniSprite.animate( playerController, 16, 16, 0, 8, 16, 24);				// sets player animation to crouch right
+										AniSprite.animate( playerController, 16, 16, 0, 8, 16, 24);				// sets player animation to crouch right
 								}
 						}
 	}
@@ -315,11 +324,11 @@ public class playerControl : MonoBehaviour
 						{
 								if (velocity.x == 0 && Input.GetAxis("Vertical") < 0)					// use the left crouch jump animation
 								{
-									aniSprite.animate(playerController, 16, 16, 12, 11, 4, 12);
+									AniSprite.animate(playerController, 16, 16, 12, 11, 4, 12);
 								}
 								else
 								{
-									aniSprite.animate( playerController, 16, 16, 11, 3, 4, 12);			// use the left normal jump animtion
+									AniSprite.animate( playerController, 16, 16, 11, 3, 4, 12);			// use the left normal jump animtion
 								}
 						}
 							
@@ -327,11 +336,11 @@ public class playerControl : MonoBehaviour
 						{
 								if (velocity.x == 0 && Input.GetAxis("Vertical") < 0)					// use the right crouch jump animation
 								{
-									aniSprite.animate(playerController, 16, 16, 12, 10, 4, 12);
+									AniSprite.animate(playerController, 16, 16, 12, 10, 4, 12);
 								}
 								else
 								{
-									aniSprite.animate( playerController, 16, 16, 11, 2, 4, 12);			// use the right normal jump animtion
+									AniSprite.animate( playerController, 16, 16, 11, 2, 4, 12);			// use the right normal jump animtion
 								}
 						}		
 	}
