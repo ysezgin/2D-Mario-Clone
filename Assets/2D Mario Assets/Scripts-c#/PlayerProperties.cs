@@ -7,30 +7,57 @@ public class PlayerProperties : MonoBehaviour
 {
 
 	#region									_Fields_
-
-	public 	int								lives							=	3;
-	public 	int								keys							=	0;
-	public 	int								coins							=	0;
-
-	public 	Rigidbody						projectileFire;
-
-	public 	Transform						projectile_socket_left;
-	public 	Transform						projectile_socket_right;
-
-	public 	Material						material_player_standard;
-	public 	Material						material_player_fire;
-
-	public 	bool							changeMario						=	false;
-	public 	bool							hasFire							=	false;
-
-	private int								coinLife						=	20;
-	private bool							canShoot						=	false;
-
-	public static CharacterController		playerController;		
-	public static Transform					playerTransform;
-	public static MeshRenderer				playerMeshRender;
 	
-	public PlayerState						active_player_state				=	PlayerState.MarioSmall;
+	#region Player Movement Speeds
+	
+	static public float					walkSpeed           			= 1.5f;                     					// speed of the standard walk
+	static public float					runSpeed						= 2.0f;                     					// speed of the run
+	
+	static public float					walkJump            			= 6.0f;                     					// jump height from walk    
+	static public float					runJump							= 9.0f;                     					// jump height from run
+	static public float					crouchJump          			= 10.0f;                    					// jump height from crouch 
+	
+	#endregion
+
+	#region Enivornmental Forces
+
+	static public float					fallSpeed           			= 2.0f;                     					// speed of falling down
+	static public float					gravity             			= 20.0f;                    					// downward force applied on the character      
+	static public float					collision_repel_above			= 1.0f;	 
+	
+	#endregion
+
+
+	public AudioClip								jumpSound;
+	public AudioClip								crouchJumpSound;
+
+	public Transform								particleJump;	
+
+
+
+	public static int								lives							=	3;
+	public static int								keys							=	0;
+	public static int								coins							=	0;
+
+	public 	Rigidbody								projectileFire;
+
+	public 	Transform								projectile_socket_left;
+	public 	Transform								projectile_socket_right;
+
+	public 	Material								material_player_standard;
+	public 	Material								material_player_fire;
+
+	public bool										changeMario						=	false;
+	public bool										hasFire							=	false;
+
+	private static int								coinLife						=	20;
+	private static bool								canShoot						=	false;
+
+	public static CharacterController				playerController;		
+	public static Transform							playerTransform;
+	public static MeshRenderer						playerMeshRender;
+	
+	public PlayerState								active_player_state				=	PlayerState.MarioSmall;
 
 
 	#endregion
@@ -161,25 +188,32 @@ public class PlayerProperties : MonoBehaviour
 
 	void			player_scale_small			()
 	{
-					PlayerControl.gravity		=	0;
+					gravity		=	0;
 					playerTransform.localScale	=	new Vector3	( 1.0f, 0.75f, 1.0f);
 					playerTransform.Translate	(0.0f, 0.2f, 0f);
 					playerController.height		=	0.45f;
-					PlayerControl.gravity		=	20.0f;
+					gravity		=	20.0f;
 	}
 
 	void			player_scale_normal			()
 	{
-					PlayerControl.gravity		=	0;
+					gravity		=	0;
 					playerTransform.Translate	(0.0f, 0.4f, 0.0f);
 					playerTransform.localScale	=	new Vector3	( 1.0f, 1.0f, 1.0f);
 					playerController.height		=	0.5f;
-					PlayerControl.gravity		=	20.0f;
+					gravity		=	20.0f;
 					playerTransform.Translate	(0.0f, 0.0f, 0.0f);
 	}
 
 
+	public AudioClip get_jump_sound				()
+	{
+		return this.jumpSound;
+	}
 
-
+	public AudioClip get_crouch_jump_sound		()
+	{
+		return this.crouchJumpSound;
+	}
 
 }
