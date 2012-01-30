@@ -26,3 +26,5 @@ obj
 *.guiskin
 *.physicmaterial
 *.tga
+*.prefab
+*.unitypackage
