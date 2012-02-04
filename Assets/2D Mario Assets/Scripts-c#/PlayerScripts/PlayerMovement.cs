@@ -21,12 +21,12 @@ public static class PlayerMovement
 
 	public static void			run_movement					( ref Vector3 velocity)
 	{
-								velocity.x		=	velocity.x * runSpeed;										// player moves left based on runSpeed
+								velocity.x		=	velocity.x * runSpeed;												// player moves left based on runSpeed
 	}
 
 	public static void			set_player_direction			( ref Vector3 velocity, ref int moveDirection)
 	{
-																											//the player character is facing the right
+																														//the player character is facing the right
 								if (velocity.x > 0)
 								{
 									moveDirection = 1;
@@ -41,10 +41,12 @@ public static class PlayerMovement
 
 	public static void			set_player_ground_velocity			( ref Vector3 velocity, ref CharacterController playerController )
 	{
-								velocity            =   new Vector3(Input.GetAxis("Horizontal"), 0,  0 );
-								velocity            =   playerController.transform.TransformDirection(velocity);
-								velocity.x          =   velocity.x * walkSpeed; 
-
+								if ( playerController.isGrounded == true )
+								{
+									velocity            =   new Vector3(Input.GetAxis("Horizontal"), 0,  0 );
+									velocity            =   playerController.transform.TransformDirection(velocity);
+									velocity.x          =   velocity.x * walkSpeed; 
+								}
 	}
 
 	public static void			set_player_air_velocity				( ref Vector3 velocity, ref CharacterController playerController )
@@ -71,7 +73,9 @@ public static class PlayerMovement
 	public	static void			player_acceleration_from_gravity	( ref Vector3 velocity, ref CharacterController playerController)
 	{
 								if (playerController.isGrounded == false)
+								{
 										velocity.y          =	velocity.y - (gravity * Time.deltaTime);
+								}
 	}
 
 	public static void			jump_movement				(ref Vector3 velocity)

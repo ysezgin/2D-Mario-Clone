@@ -202,20 +202,20 @@ public class PlayerProperties : MonoBehaviour
 
 	void			player_scale_small			()
 	{
-					gravity		=	0;
+					
 					playerTransform.localScale	=	new Vector3	( 1.0f, 0.75f, 1.0f);
 					playerTransform.Translate	(0.0f, 0.2f, 0f);
 					playerController.height		=	0.45f;
-					gravity		=	20.0f;
+					
 	}
 
 	void			player_scale_normal			()
 	{
-					gravity		=	0;
+					
 					playerTransform.Translate	(0.0f, 0.4f, 0.0f);
 					playerTransform.localScale	=	new Vector3	( 1.0f, 1.0f, 1.0f);
 					playerController.height		=	0.5f;
-					gravity		=	20.0f;
+					
 					playerTransform.Translate	(0.0f, 0.0f, 0.0f);
 	}
 

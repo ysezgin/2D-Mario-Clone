@@ -45,13 +45,14 @@ public class PlayerControl : MonoBehaviour
 
 	#endregion
 
-	
+	public bool active = false;
 
 	void				Update								()
 	{
+						
 						CharacterController playerController		=		GetComponent<CharacterController>	();
 						AudioSource			playerAudio				=		GetComponent<AudioSource>			();
-						playerProps				=		GetComponent<PlayerProperties>		();
+						playerProps									=		GetComponent<PlayerProperties>		();
 						PlayerMovement.player_acceleration_from_gravity			( ref velocity, ref playerController);
 						PlayerMovement.set_player_direction						( ref velocity, ref moveDirection);
 
@@ -91,11 +92,11 @@ public class PlayerControl : MonoBehaviour
 
 	static void			air_actions							( ref CharacterController playerController, ref AudioSource playerAudio )				// movements available to the player in the air
 	{
-						if ( playerController.isGrounded == false && in_a_jump == true)
+						if ( playerController.isGrounded == false )
 						{
 								PlayerMovement.modulate_jump_height					( ref velocity);
 								PlayerMovement.set_player_air_velocity				( ref velocity, ref playerController );
-								PlayerAnimation.jump_animation						( ref playerController, ref velocity, moveDirection );
+								
 						}
 	}
 
