@@ -96,7 +96,11 @@ public class PlayerControl : MonoBehaviour
 						{
 								PlayerMovement.modulate_jump_height					( ref velocity);
 								PlayerMovement.set_player_air_velocity				( ref velocity, ref playerController );
-								
+
+								if (in_a_jump)
+								{ 
+										PlayerAnimation.jump_animation						( ref playerController, ref velocity, moveDirection );
+								}
 						}
 	}
 
