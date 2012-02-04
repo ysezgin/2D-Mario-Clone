@@ -19,12 +19,12 @@ public static class PlayerMovement
 
 
 
-	public static void			run_movement					( ref Vector3 velocity)
+	public static void			run_movement						( ref Vector3 velocity)
 	{
 								velocity.x		=	velocity.x * runSpeed;												// player moves left based on runSpeed
 	}
 
-	public static void			set_player_direction			( ref Vector3 velocity, ref int moveDirection)
+	public static void			set_player_direction				( ref Vector3 velocity, ref int moveDirection)
 	{
 																														//the player character is facing the right
 								if (velocity.x > 0)
@@ -62,7 +62,7 @@ public static class PlayerMovement
 								}
 		 
 					
-								if (playerController.collisionFlags == CollisionFlags.Above)							// if the player's head collides with an object, repel the player downwards
+								if (playerController.collisionFlags == CollisionFlags.Above)												// if the player's head collides with an object, repel the player downwards
 								{
 										velocity.y	=	0;
 										velocity.y	=	velocity.y - collision_repel_above;
@@ -78,19 +78,19 @@ public static class PlayerMovement
 								}
 	}
 
-	public static void			jump_movement				(ref Vector3 velocity)
+	public static void			jump_movement						(ref Vector3 velocity)
 	{				
 								PlayerControl.in_a_jump			=		true;
-								if		( Input.GetButton( "Fire1" ))											// player does a run jump
+								if		( Input.GetButton( "Fire1" ))																		// player does a run jump
 								{	
 										velocity.y  =		runJump;
-										velocity.x  =		runSpeed * Input.GetAxis ("Horizontal");			// the run jump moves faster in the x direction than the other jumps
+										velocity.x  =		runSpeed * Input.GetAxis ("Horizontal");										// the run jump moves faster in the x direction than the other jumps
 								}
 								else
 								{	
-										velocity.y	=		walkJump;											// player does a walk jump
+										velocity.y	=		walkJump;																		// player does a walk jump
 								}
-								if (velocity.x == 0 && Input.GetAxis("Vertical") < 0)							// player does a crouch jump
+								if (velocity.x == 0 && Input.GetAxis("Vertical") < 0)														// player does a crouch jump
 								{	
 								
 										velocity.y	=		crouchJump;		
@@ -98,26 +98,26 @@ public static class PlayerMovement
 								}
 	}
 
-	public static void			crouch_movement				(ref Vector3 velocity)
+	public static void			crouch_movement						( ref Vector3 velocity )
 	{
-								velocity.x = 0;																	// prevents the player from moving while crouching
+								velocity.x = 0;																								// prevents the player from moving while crouching
 	}
 
 	
 
-	public static void			walk_movement				(ref Vector3 velocity)
+	public static void			walk_movement						( ref Vector3 velocity )
 	{
 								if (Input.GetAxis ("Horizontal") != 0)																		// sets player animation to walk left
 								{
-										velocity.x		=	velocity.x * walkSpeed;										// player moves left based on walk speed
+										velocity.x		=	velocity.x * walkSpeed;															// player moves left based on walk speed
 								}
 	}
 	
-	public static void			modulate_jump_height			( ref Vector3 velocity )
+	public static void			modulate_jump_height				( ref Vector3 velocity )
 	{
 								if (Input.GetButtonUp("Jump"))
 								{
-										velocity.y = velocity.y - fallSpeed;									// subtract current height from 1 if the jump button is up
+										velocity.y = velocity.y - fallSpeed;																// subtract current height from 1 if the jump button is up
 								}
 	}
 

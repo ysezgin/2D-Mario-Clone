@@ -15,7 +15,7 @@ public class PlayerProperties : MonoBehaviour
 	static public float					runSpeed						= 2.0f;                     					// speed of the run
 	
 	static public float					walkJump            			= 6.0f;                     					// jump height from walk    
-	static public float					runJump							= 9.0f;                     					// jump height from run
+	static public float					runJump							= 8.0f;                     					// jump height from run
 	static public float					crouchJump          			= 10.0f;                    					// jump height from crouch 
 	
 	#endregion

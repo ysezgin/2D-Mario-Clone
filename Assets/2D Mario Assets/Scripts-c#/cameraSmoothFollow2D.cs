@@ -8,13 +8,13 @@ public class cameraSmoothFollow2D : MonoBehaviour
 			
 	public GameObject			cameraTarget;													// object to observe and follow
 
-	public GameObject			playerTarget;													// player object for moving
+	public GameObject			player;													// player object for moving
 
 	public float				smoothTime				=		0.1f;							// time for camera dampen
 	public float				cameraHeight			=		2.5f;
-	public float				cameraZoomInBound		=		2.5f;							// maximum amount the camera can zoom int
-	public float				cameraZoomOutBound		=		4.0f;							// maximum amount the camera can zoom out
-
+	public float				cameraZoomMin			=		2.6f;							// maximum amount the camera can zoom int
+	public float				cameraZoomMax			=		4.0f;							// maximum amount the camera can zoom out
+	public float				cameraZoomTime			=		0.003f;							// speed for camera zooming
 
 	public bool					cameraFollowX			=		true;							// camera follows on the horizontal
 	public bool					cameraFollowY			=		true;							// camera follows on the vertical
@@ -32,7 +32,11 @@ public class cameraSmoothFollow2D : MonoBehaviour
 
 	#endregion
 
+	void			Start						()
+	{
+					
 
+	}
 
 
 	void			Update						()
@@ -47,21 +51,40 @@ public class cameraSmoothFollow2D : MonoBehaviour
 	{
 				if ( cameraFollowX )
 				{
-						float newPosition			=	Mathf.SmoothDamp	( cameraTransform.position.x, cameraTarget.transform.position.x, ref velocity.x, smoothTime);
-						cameraTransform.position	=	new Vector3			( newPosition, transform.position.y, transform.position.z);
+						float newPosition				=	Mathf.SmoothDamp	( cameraTransform.position.x, cameraTarget.transform.position.x, ref velocity.x, smoothTime);
+						cameraTransform.position		=   new Vector3			( newPosition, transform.position.y, transform.position.z );
 				}
+
 				if ( cameraFollowY )
 				{
 						float newPosition			=	Mathf.SmoothDamp	( cameraTransform.position.y, cameraTarget.transform.position.y, ref velocity.y, smoothTime);
-						cameraTransform.position	=	new Vector3			( transform.position.x, newPosition, transform.position.z);
+						cameraTransform.position	=	new Vector3			( cameraTransform.position.x, newPosition, cameraTransform.position.z );
 				}
-				if ( cameraFollowY == false && cameraFollowHeight == true )
+
+				if ( !cameraFollowY && cameraFollowHeight )
 				{
-					//	cameraTransform.position.x	=	;
+					cameraTransform.Translate ( cameraTransform.position.x, cameraHeight, cameraTransform.position.z );
 				}
-				if ( cameraFollowX )
+
+				if ( cameraZoom )
 				{
-					//	cameraTransform.position.x	=	;
+					
+					currentPosition			=		player.transform.position.y;				// set the current postion to the player's current y position
+
+					playerJumpHeight = currentPosition - PlayerControl.startPosition;			// subtract the current heigh from the playerControl start position
+
+					if ( playerJumpHeight < 0)
+					{
+						playerJumpHeight = playerJumpHeight * -1;
+					}
+
+					if (playerJumpHeight > cameraZoomMax)
+					{
+						playerJumpHeight = cameraZoomMax;
+					}
+					
+
+					this.camera.orthographicSize		=	Mathf.Lerp ( this.camera.orthographicSize, playerJumpHeight + cameraZoomMin, Time.time * cameraZoomTime);
 				}		
 
 	}

@@ -20,15 +20,15 @@ public class PlayerControl : MonoBehaviour
 
 	#endregion	
 
-	public static int					moveDirection       			= 1;                							// direction the player is facing, 1 = right, -1 = left
+	public static int					moveDirection       			=	1;                							// direction the player is facing, 1 = right, -1 = left
 
-	static private Vector3				velocity            			= Vector3.zero;      							// direction and speed of player
+	static private Vector3				velocity            			=	Vector3.zero;      							// direction and speed of player
 
-	static float						startPosition       			= 0.0f;             							// coordinate of start postioon
+	public static float						startPosition       		=	0.0f;             							// coordinate of start postioon
 
-	public static bool					in_a_jump						= false;
+	public static bool					in_a_jump						=	false;
 
-	static	CharacterController			playerController				= PlayerProperties.playerController;
+	static	CharacterController			playerController				=	PlayerProperties.playerController;
 	static	AudioSource					playerAudio;
 	
 	#region Particles
@@ -53,12 +53,12 @@ public class PlayerControl : MonoBehaviour
 						CharacterController playerController		=		GetComponent<CharacterController>	();
 						AudioSource			playerAudio				=		GetComponent<AudioSource>			();
 						playerProps									=		GetComponent<PlayerProperties>		();
-						PlayerMovement.player_acceleration_from_gravity			( ref velocity, ref playerController);
-						PlayerMovement.set_player_direction						( ref velocity, ref moveDirection);
+						
 
 						player_actions											( ref playerController, ref playerAudio );
 
-						
+						PlayerMovement.player_acceleration_from_gravity			( ref velocity, ref playerController);
+						PlayerMovement.set_player_direction						( ref velocity, ref moveDirection);
 						
 						playerController.Move				( velocity * Time.deltaTime );
 						
@@ -80,7 +80,8 @@ public class PlayerControl : MonoBehaviour
 	{
 						if	(playerController.isGrounded == true)												// movements available to the player on the ground
 						{
-								in_a_jump					=	  false;
+								in_a_jump					=		false;
+								startPosition				=		transform.position.y;
 								PlayerMovement.set_player_ground_velocity		( ref velocity, ref playerController );
 								crouch_action									( ref playerController, ref playerAudio );
 								run_action										( ref playerController, ref playerAudio );
@@ -104,7 +105,7 @@ public class PlayerControl : MonoBehaviour
 						}
 	}
 
-	static void				jump_action					( ref CharacterController playerController, ref AudioSource playerAudio )
+	static void			jump_action					( ref CharacterController playerController, ref AudioSource playerAudio )
 	{
 						if ( Input.GetButton( "Jump" ))															// controls which type of jump the player character will execute
 						{				
