@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 [AddComponentMenu("Mario Clone/Actor/Player Properties Script")]
 
@@ -21,12 +22,13 @@ public class PlayerProperties : MonoBehaviour
 
 	#region Enivornmental Forces
 
-	static public float					fallSpeed           			= 2.0f;                     					// speed of falling down
-	static public float					gravity             			= 20.0f;                    					// downward force applied on the character      
-	static public float					collision_repel_above			= 1.0f;	 
+	static public float					fallSpeed           			= EnvironmentalProperties.fallSpeed;                     					// speed of falling down
+	static public float					gravity             			= EnvironmentalProperties.gravity;                    					// downward force applied on the character      
+	static public float					collision_repel_above			= EnvironmentalProperties.collision_repel_above;	 
 	
 	#endregion
 
+	
 
 	public AudioClip								jumpSound;
 	public AudioClip								crouchJumpSound;
@@ -90,6 +92,18 @@ public class PlayerProperties : MonoBehaviour
 					Shoot					();
 
 	}
+
+		void OnGUI() 
+	{ 
+		int ammo  = 0;
+		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.PrefixLabel("Ammo");
+		int target = EditorGUILayout.IntField(ammo);
+		EditorGUILayout.EndHorizontal();
+	}
+
+
+
 
 	#endregion
 
@@ -217,3 +231,5 @@ public class PlayerProperties : MonoBehaviour
 	}
 
 }
+
+
